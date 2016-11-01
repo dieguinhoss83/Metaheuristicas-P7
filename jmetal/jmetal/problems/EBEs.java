@@ -3799,76 +3799,76 @@ switch(selectedOF){
 
  public double BucklingOmega(double Nxx, double[] G, double[] B) throws JMException{
 
-	 double ω = 1.0; // coeficiente de Pandeo
+	 double i = 1.0; // coeficiente de Pandeo
 
-  if(Nxx < 0.0 && G[AREA] > 0.0 && lBuckling)
-  {
-      if (G[BLijY_] <= 0.0) G[BLijY_] = 1.0;
-      if (G[BLijZ_] <= 0.0) G[BLijZ_] = 1.0;
-
-      // radio de inercia respecto al eje y
-      double iy  = G[Iy_] / G[AREA];
-      // radio de inercia respecto al eje z
-      double iz = G[Iz_] / G[AREA];
-      //esbeltez respecto al eje y
-      double λo  = B[L_] * G[BLijY_] / iy;
-      // esbeltez maxima entre para los ejes y, z
-      λo = Math.min(λo, B[L_] * G[BLijZ_] / iz);
-
-	      if(G[TypeMaterial_]== 0) {
-              // steel cable stress 125 MN/m2
-              // System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
-              }
-          else if(G[TypeMaterial_]== 1)  // F-22 steel 22 MN/m2
-	      {
-              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
- 	      }
-	      else if(G[TypeMaterial_]== 2)  // F-24 steel 24 MN/m2
-	      {
-	          // Método Domke - Tabla Lamda0  - Lamda
-	    	  // double λ = -2.3443 + 1.07817 * λo - 0.0036181 * Math.pow(λo, 2) + 0.000008209862 * Math.pow(λo, 3) - 0.00000001058458 * Math.pow(λo, 4) + 0.000000000007147864 * Math.pow(λo, 5) - 0.00000000000000196410755 * Math.pow(λo, 6);
-	          // coeficiente omega de mayoración por efecto de Pandeo
-	          // double ratio = λo / λ;
-	          // ω = Math.pow(ratio, 2.0);
-              
-	    	  // Buckling coefficient, Table: Lamda-Omega
-              double λ  = λo;
-              if ( λ <= 150)
-              {
-            	  ω = 1.113 + 0.0070516 * λ - 0.000132108 * Math.pow(λ, 2.0) + 0.000002106132 * Math.pow(λ, 3.0) - 0.00000000397368332151 * Math.pow(λ, 4.0);
-              }
-              else ω = 25.0;
-	      }
-
-	      else if(G[TypeMaterial_] == 3){  // F-32 steel 320 N/mm2
-              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
-          }
-
-          else if(G[TypeMaterial_] == 10){  // HL-7 Hormigón   7 MN/m2
-              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
-          }
-
-          else if(G[TypeMaterial_] == 12){  // HL-17 Hormigón 17 MN/m2
-              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
-          }
-
-          else if(G[TypeMaterial_] == 14){  // HL-21 Hormigón 21 MN/m2
-              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
-          }
-
-          else if(G[TypeMaterial_] == 20)  // Wood hard an halt-hard
-	      {
-	    	  // Buckling coefficient, Table: Lamda-Omega
-             double λ  = λo;
-             if (λ<=150)
-             {
-                 ω = 1.048 + 0.005524 * λ - 0.000101666 * Math.pow(λ, 2.0) + 0.00000301687 * Math.pow(λ, 3.0) - 0.000000004366246 * Math.pow(λ, 4.0);
-             }
-             else ω = 25.0;
-	      }
-      }
+//  if(Nxx < 0.0 && G[AREA] > 0.0 && lBuckling)
+//  {
+//      if (G[BLijY_] <= 0.0) G[BLijY_] = 1.0;
+//      if (G[BLijZ_] <= 0.0) G[BLijZ_] = 1.0;
+//
+//      // radio de inercia respecto al eje y
+//      double iy  = G[Iy_] / G[AREA];
+//      // radio de inercia respecto al eje z
+//      double iz = G[Iz_] / G[AREA];
+//      //esbeltez respecto al eje y
+//      double λo  = B[L_] * G[BLijY_] / iy;
+//      // esbeltez maxima entre para los ejes y, z
+//      λo = Math.min(λo, B[L_] * G[BLijZ_] / iz);
+//
+//	      if(G[TypeMaterial_]== 0) {
+//              // steel cable stress 125 MN/m2
+//              // System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
+//              }
+//          else if(G[TypeMaterial_]== 1)  // F-22 steel 22 MN/m2
+//	      {
+//              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
+// 	      }
+//	      else if(G[TypeMaterial_]== 2)  // F-24 steel 24 MN/m2
+//	      {
+//	          // Método Domke - Tabla Lamda0  - Lamda
+//	    	  // double λ = -2.3443 + 1.07817 * λo - 0.0036181 * Math.pow(λo, 2) + 0.000008209862 * Math.pow(λo, 3) - 0.00000001058458 * Math.pow(λo, 4) + 0.000000000007147864 * Math.pow(λo, 5) - 0.00000000000000196410755 * Math.pow(λo, 6);
+//	          // coeficiente omega de mayoración por efecto de Pandeo
+//	          // double ratio = λo / λ;
+//	          // ω = Math.pow(ratio, 2.0);
+//              
+//	    	  // Buckling coefficient, Table: Lamda-Omega
+//              double λ  = λo;
+//              if ( λ <= 150)
+//              {
+//            	  ω = 1.113 + 0.0070516 * λ - 0.000132108 * Math.pow(λ, 2.0) + 0.000002106132 * Math.pow(λ, 3.0) - 0.00000000397368332151 * Math.pow(λ, 4.0);
+//              }
+//              else ω = 25.0;
+//	      }
+//
+//	      else if(G[TypeMaterial_] == 3){  // F-32 steel 320 N/mm2
+//              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
+//          }
+//
+//          else if(G[TypeMaterial_] == 10){  // HL-7 Hormigón   7 MN/m2
+//              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
+//          }
+//
+//          else if(G[TypeMaterial_] == 12){  // HL-17 Hormigón 17 MN/m2
+//              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
+//          }
+//
+//          else if(G[TypeMaterial_] == 14){  // HL-21 Hormigón 21 MN/m2
+//              System.out.println("Error in " + G[INDEX_] + " group, the material number " + G[TypeMaterial_] + " is not implemented");
+//          }
+//
+//          else if(G[TypeMaterial_] == 20)  // Wood hard an halt-hard
+//	      {
+//	    	  // Buckling coefficient, Table: Lamda-Omega
+//             double λ  = λo;
+//             if (λ<=150)
+//             {
+//                 ω = 1.048 + 0.005524 * λ - 0.000101666 * Math.pow(λ, 2.0) + 0.00000301687 * Math.pow(λ, 3.0) - 0.000000004366246 * Math.pow(λ, 4.0);
+//             }
+//             else ω = 25.0;
+//	      }
+//      }
       
-  return ω;
+  return i;
 
 }
   public void EBEsTransversalSectionCircular(int gr, double d) throws JMException{
