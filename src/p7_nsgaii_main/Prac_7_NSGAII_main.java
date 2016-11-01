@@ -107,7 +107,7 @@ public class Prac_7_NSGAII_main {
 		    
 			break;
 		case 2:
-			System.out.println("case 2\n");
+			System.out.println("holacase 2\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 30;
 		    problem = new ZDT2(solutionType, numberOfVariables);
