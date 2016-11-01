@@ -100,42 +100,42 @@ public class Prac_7_NSGAII_main {
     for(int i=1;i<=6;i++){
     	switch (i) {
 		case 1:
-			System.out.println("case 1\n");
+			System.out.println("ZDT1\n");
 		    solutionType = "ArrayReal";
 		    numberOfVariables = 30;
 		    problem = new ZDT1(solutionType, numberOfVariables);
 		    
 			break;
 		case 2:
-			System.out.println("case 2\n");
+			System.out.println("ZDT2\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 30;
 		    problem = new ZDT2(solutionType, numberOfVariables);
 		    
 			break;
 		case 3:
-			System.out.println("case 3\n");
+			System.out.println("ZDT3\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 30;
 		    problem = new ZDT3(solutionType, numberOfVariables);
 		    
 			break;
 		case 4:
-			System.out.println("case 4\n");
+			System.out.println("ZDT4\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 10;
 		    problem = new ZDT4(solutionType, numberOfVariables);
 		    
 			break;
 		case 5:
-			System.out.println("case 5\n");
+			System.out.println("ZDT5\n");
 			solutionType = "Binary";
 		    numberOfVariables = 11;
 		    problem = new ZDT5(solutionType, numberOfVariables);
 		    
 			break;
 		case 6:
-			System.out.println("case 6\n");
+			System.out.println("ZDT6\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 10;
 		    problem = new ZDT6(solutionType, numberOfVariables);
