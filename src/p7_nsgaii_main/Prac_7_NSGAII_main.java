@@ -21,7 +21,10 @@
 
 package p7_nsgaii_main;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,6 +34,7 @@ import java.util.logging.Logger;
 import jmetal.core.Algorithm;
 import jmetal.core.Operator;
 import jmetal.core.Problem;
+import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.operators.crossover.CrossoverFactory;
@@ -64,7 +68,7 @@ public class Prac_7_NSGAII_main {
   
   private static Object CROSSOVER_RATE = 0.8;
   private static Object MUTATION_RATE = 0.01;
-  
+
   /**
    * @param args Command line arguments.
    * @throws JMException 
@@ -90,52 +94,59 @@ public class Prac_7_NSGAII_main {
     int numberOfVariables; //número de variables de decisión
 
     // Logger object and file to store log messages
-    logger_      = Configuration.logger_ ;
-    fileHandler_ = new FileHandler("NSGAII_main.log"); 
-    logger_.addHandler(fileHandler_) ;
+//    logger_      = Configuration.logger_ ;
+//    fileHandler_ = new FileHandler("NSGAII_main.log"); 
+//    logger_.addHandler(fileHandler_) ;
     
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
     String date = sdf.format(new Date());
-
+    String paretoFoundPathFile = null;
+    String paretoTruePathFile = null;
+    
+    FileOutputStream fos   = new FileOutputStream("Informe_Ejecucion_"+date+".txt");
+    OutputStreamWriter osw = new OutputStreamWriter(fos)    ;
+    BufferedWriter bw      = new BufferedWriter(osw)        ;
+    
     for(int i=1;i<=6;i++){
+    	System.out.println("\n");
     	switch (i) {
 		case 1:
-			System.out.println("case 1\n");
+			System.out.println("ZDT 1\n");
 		    solutionType = "ArrayReal";
 		    numberOfVariables = 30;
 		    problem = new ZDT1(solutionType, numberOfVariables);
 		    
 			break;
 		case 2:
-			System.out.println("case 2\n");
+			System.out.println("ZDT 2\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 30;
 		    problem = new ZDT2(solutionType, numberOfVariables);
 		    
 			break;
 		case 3:
-			System.out.println("case 3\n");
+			System.out.println("ZDT 3\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 30;
 		    problem = new ZDT3(solutionType, numberOfVariables);
 		    
 			break;
 		case 4:
-			System.out.println("case 4\n");
+			System.out.println("ZDT 4\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 10;
 		    problem = new ZDT4(solutionType, numberOfVariables);
 		    
 			break;
 		case 5:
-			System.out.println("case 5\n");
+			System.out.println("ZDT 5\n");
 			solutionType = "Binary";
 		    numberOfVariables = 11;
 		    problem = new ZDT5(solutionType, numberOfVariables);
 		    
 			break;
 		case 6:
-			System.out.println("case 6\n");
+			System.out.println("ZDT 6\n");
 			solutionType = "ArrayReal";
 		    numberOfVariables = 10;
 		    problem = new ZDT6(solutionType, numberOfVariables);
@@ -147,6 +158,7 @@ public class Prac_7_NSGAII_main {
 		}
     	
     	indicators = null ;
+    	//indicators = new QualityIndicator(problem, "VAR");
         algorithm = new NSGAII(problem);
         //algorithm = new ssNSGAII(problem);
 
@@ -202,27 +214,62 @@ public class Prac_7_NSGAII_main {
         long estimatedTime = System.currentTimeMillis() - initTime;
         
         // Result messages 
-        logger_.info("Tiempo total de ejecución: "+estimatedTime + "ms");
+        //logger_.info("Tiempo total de ejecución - "+algorithm.getProblem().getName()+": " +estimatedTime + "ms");
+        System.out.println("Tiempo total de ejecución - "+algorithm.getProblem().getName()+": " +estimatedTime + "ms");
+        bw.write("Tiempo total de ejecución - "+algorithm.getProblem().getName()+": " +estimatedTime + "ms\n");
+        bw.newLine();
         
         //VAR = Pareto optimal solutions
-        logger_.info("Variables values have been writen to file C:/"+algorithm.getProblem().getName()+"-"+"Pareto_Optimal_Solutions_"+date);
-        population.printVariablesToFile("C:/"+algorithm.getProblem().getName()+"-"+"Pareto_Optimal_Solutions_"+date);    
+        paretoTruePathFile = "C:/"+algorithm.getProblem().getName()+"-"+"Pareto_Optimal_Solutions_"+date;
+        //logger_.info("Variables values have been writen to file C:/"+algorithm.getProblem().getName()+"-"+"Pareto_Optimal_Solutions_"+date);
+        System.out.println("Variables values have been writen to file "+paretoTruePathFile);
+        bw.write("Variables values have been writen to file "+paretoTruePathFile);
+        bw.newLine();
+        
+        population.printVariablesToFile(paretoTruePathFile);
+        //population.printVariablesToFile("VAR");
         
         //FUN = Pareto front found by the algorithm
-        logger_.info("Objectives values have been writen to file C:/"+algorithm.getProblem().getName()+"-"+"Pareto_Front_Solutions_found_by_NSGAII_"+date);
-        population.printObjectivesToFile("C:/"+algorithm.getProblem().getName()+"-"+"Pareto_Front_Solutions_found_by_NSGAII_"+date);
+        paretoFoundPathFile = "C:/"+algorithm.getProblem().getName()+"-"+"Pareto_Front_Solutions_found_by_NSGAII_"+date;
+        //logger_.info("Objectives values have been writen to file C:/"+algorithm.getProblem().getName()+"-"+"Pareto_Front_Solutions_found_by_NSGAII_"+date);
+        
+        System.out.println("Objectives values have been writen to file "+paretoFoundPathFile);
+        bw.write("Objectives values have been writen to file "+paretoFoundPathFile);
+        bw.newLine();
+        
+        population.printObjectivesToFile(paretoFoundPathFile);
+        //population.printObjectivesToFile("FUN");
       
+        indicators = new QualityIndicator(problem, paretoFoundPathFile);
         if (indicators != null) {
-          logger_.info("Quality indicators") ;
-          logger_.info("Hypervolume: " + indicators.getHypervolume(population)) ;
-          logger_.info("GD         : " + indicators.getGD(population)) ;
-          logger_.info("IGD        : " + indicators.getIGD(population)) ;
-          logger_.info("Spread     : " + indicators.getSpread(population)) ;
-          logger_.info("Epsilon    : " + indicators.getEpsilon(population)) ;  
+          //logger_.info("Quality indicators - "+algorithm.getProblem().getName()) ;
+          System.out.println("Quality indicators - "+algorithm.getProblem().getName());
+          bw.write("Quality indicators - "+algorithm.getProblem().getName());
+          bw.newLine();
+          
+          //logger_.info("Hypervolume - "+algorithm.getProblem().getName()+": " + indicators.getHypervolume(population)) ;
+          System.out.println("Hypervolume - "+algorithm.getProblem().getName()+": " + indicators.getHypervolume(population));
+          bw.write("Hypervolume - "+algorithm.getProblem().getName()+": " + indicators.getHypervolume(population));
+          bw.newLine();
+          
+          //logger_.info("GD          - "+algorithm.getProblem().getName()+": " + indicators.getGD(population)) ;
+          System.out.println("GD          - "+algorithm.getProblem().getName()+": " + indicators.getGD(population));
+          bw.write("GD          - "+algorithm.getProblem().getName()+": " + indicators.getGD(population));
+          bw.newLine();
+          
+          //logger_.info("IGD         - "+algorithm.getProblem().getName()+": " + indicators.getIGD(population)) ;
+          //logger_.info("Spread      - "+algorithm.getProblem().getName()+": " + indicators.getSpread(population)) ;
+          System.out.println("Spread      - "+algorithm.getProblem().getName()+": " + indicators.getSpread(population));
+          bw.write("Spread      - "+algorithm.getProblem().getName()+": " + indicators.getSpread(population));
+          bw.newLine();
+          
+          //logger_.info("Epsilon     - "+algorithm.getProblem().getName()+": " + indicators.getEpsilon(population)) ;  
          
           int evaluations = ((Integer)algorithm.getOutputParameter("evaluations")).intValue();
-          logger_.info("Velocidad      : " + evaluations + " evaluaciones") ;      
+          //logger_.info("Velocidad       - "+algorithm.getProblem().getName()+": " + evaluations + " evaluaciones") ;
+          //System.out.println("Velocidad       - "+algorithm.getProblem().getName()+": " + evaluations + " evaluaciones");
         } // if
-    }//for 
+    }//for
+    bw.close();
   } //main
 } // NSGAII_main
